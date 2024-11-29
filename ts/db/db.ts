@@ -1,24 +1,40 @@
 import mysql from "mysql";
 import dotenv from "dotenv";
-import responses from "../common/response.js";
-import RESPONSES from "../common/response.js";
+import RESPONSES from "../common/response";
 
 dotenv.config();
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  database: process.env.DB_NAME,
+  port: Number(process.env.DB_PORT),
+  connectTimeout: 10000,
 });
 
-connection.connect(function (error) {
-  if (!!error) {
-    RESPONSES.serverError;
-    console.log(error);
-  } else {
-    console.log("Database Connected Successfully..!!");
-  }
-});
+// Handle disconnects
+function handleDisconnect() {
+  connection.connect((error) => {
+    if (error) {
+      console.error('Error connecting to database:', error);
+      // Retry connection after 2 seconds
+      // setTimeout(handleDisconnect, 2000);
+    } else {
+      console.log("Database Connected Successfully..!!");
+    }
+  });
+
+  connection.on('error', (err) => {
+    console.error('Database error:', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+
+handleDisconnect();
 
 export default connection;

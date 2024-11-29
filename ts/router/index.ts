@@ -1,6 +1,9 @@
 import { Router } from "express";
-import actual from "./actual";
+import register from "./register";
+import login from "./login";
 
 export const router = Router();
 
-router.use("/actual", actual);
+router.use("/register", register);
+router.use("/login", login);
+

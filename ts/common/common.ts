@@ -3,7 +3,7 @@ import dbConn from "../db/db";
 // executeQuery function
 export async function execute(query: string, parameters: any[]): Promise<any> {
   return new Promise((resolve, reject) => {
-    dbConn.query(query, parameters, (err, rows) => {
+    dbConn.query(query, parameters, (err: any, rows: any) => {
       if (err) {
         reject(err); // Reject on error
       } else {
@@ -12,7 +12,6 @@ export async function execute(query: string, parameters: any[]): Promise<any> {
     });
   });
 }
-
 
 export function sendResponse<T>(
   request: any,

@@ -2,11 +2,13 @@ import express, { json, text, urlencoded } from "express";
 import { router } from "./router";
 import cors from "cors";
 import http from "http";
+import connection from "./db/db";
 
 const app = express();
-const port = 8080;
+const port = 3000;
 
 app.use(cors());
+app.use(express.json());
 app.use(json({ limit: "200mb" }));
 app.use(text());
 app.use(
@@ -17,7 +19,7 @@ app.use("/api", router);
 const server = http.createServer(app);
 
 app.get("/", (req: any, res: any) => {
-  res.send({ Message: "PM API running successfully." });
+  res.send({ Message: "Splitwise API running successfully." });
 });
 
 server.listen(port, () => {
