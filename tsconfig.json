@@ -1,14 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "outDir": "./build",
-    "rootDir": ".",
-    "strict": true,
+    "target": "ES2016",
+    "strictNullChecks": true,
+    "declaration": false,
+    "module": "commonJS",
+    "rootDir": "./ts",
+    "outDir": "build",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "sourceMap": false,
+    "noImplicitThis": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "lib": ["es2017"]
   },
-  "include": ["src/**/*.ts", "ts/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["ts/**/*"],
+  "exclude": ["build"],
+  "compileOnSave": true,
+  "files": ["tsconfig.json"]
 }
